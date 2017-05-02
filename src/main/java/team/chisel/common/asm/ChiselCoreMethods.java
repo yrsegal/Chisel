@@ -5,14 +5,25 @@ import javax.annotation.Nonnull;
 import lombok.SneakyThrows;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.BlockModelRenderer;
+import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import team.chisel.client.render.GlowRenderer;
 import team.chisel.client.render.ModelChiselBlock;
 import team.chisel.common.util.ProfileUtil;
 
+import java.lang.invoke.MethodHandle;
+import java.lang.reflect.Method;
+
+@SuppressWarnings("unused")
 public class ChiselCoreMethods {
     
     @SuppressWarnings("deprecation")
@@ -39,5 +50,15 @@ public class ChiselCoreMethods {
     
     public static void postDamageModel() {
         renderingDamageModel.set(false);
+    }
+
+    @SideOnly(Side.CLIENT)
+    public static void renderGlow(ItemStack stack, IBakedModel model) {
+        GlowRenderer.glow(stack, model);
+    }
+
+    @SideOnly(Side.CLIENT)
+    public static boolean renderGlow(BlockModelRenderer blockModelRenderer, IBlockAccess world, IBakedModel model, IBlockState state, BlockPos pos, VertexBuffer vertexBuffer) {
+        return GlowRenderer.glow(blockModelRenderer, world, model, state, pos, vertexBuffer);
     }
 }
