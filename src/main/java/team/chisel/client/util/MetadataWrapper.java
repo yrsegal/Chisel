@@ -16,7 +16,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @MethodsReturnNonnullByDefault
-    public final class MetadataWrapper implements IBakedModel {
+public final class MetadataWrapper implements IBakedModel {
+
     private final IBakedModel parent;
 
     public final boolean anyQuads;
@@ -35,8 +36,6 @@ import java.util.stream.Collectors;
 
         this.anyQuads = anyQuads;
     }
-
-    private final HashMap<Long,Map<EnumFacing, List<BakedQuad>>> quads = new HashMap<>();
 
     @Override
     public List<BakedQuad> getQuads(@Nullable IBlockState state, @Nullable EnumFacing side, long rand) {
